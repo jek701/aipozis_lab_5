@@ -1,0 +1,10 @@
+Request: GET /public/index.html
+Request: GET /index.html
+Request: GET /style.css
+Request: GET /styles.css
+Request: POST /
+Request: POST /public
+Request: POST /public
+Request: POST /
+Request: POST /new-file.txt
+Request: OPTIONS /new-file.txt
