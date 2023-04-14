@@ -8,6 +8,10 @@ Install Node.js if you haven't already. <br />
 Make sure to install the commander library by running npm init to create a package.json file and then npm install commander. <br />
 Run the server using the command: node server.js. The server will start and listen on the specified address and port (default is localhost:8080). <br />
 
+```bash
+node server.js
+```
+
 ## How to send commands?
 
 You can use command-line tools like curl or GUI-based tools like Postman or Insomnia to send HTTP requests to your server.
