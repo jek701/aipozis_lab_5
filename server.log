@@ -1,3 +1,0 @@
-Request: GET /index.html - Date: 14.04.2023, 13:48
-Request: POST /test_file.txt - File uploaded: public/test_file.txt - Date: 14.04.2023, 13:48
-Request: OPTIONS /test_file.txt - Old file: public/test_file.txt - New file: public/test_file_new_name_2.txt - Date: 14.04.2023, 13:48
