@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const {program} = require('commander');
+const moment = require("moment");
 
 program
     .option('-a, --address <address>', 'Server address', 'localhost')
@@ -19,13 +20,12 @@ function logToFile(logFile, message) {
 }
 
 const server = http.createServer((req, res) => {
-    const { method, url: reqUrl } = req;
+    const {method, url: reqUrl} = req;
     const parsedUrl = new URL(reqUrl, `http://${options.address}:${options.port}`);
     const filePath = path.join(options.directory, parsedUrl.pathname);
 
-    logToFile(options.logFile, `Request: ${method} ${reqUrl}`);
-
     if (method === 'GET') {
+        logToFile(options.logFile, `Request: ${method} ${reqUrl} - Date: ${moment().format("DD.MM.YYYY, HH:mm")}`);
         fs.stat(filePath, (err, stats) => {
             if (err || !stats.isFile()) {
                 res.statusCode = 404;
@@ -48,6 +48,7 @@ const server = http.createServer((req, res) => {
                     res.statusCode = 500;
                     res.end('Internal Server Error');
                 } else {
+                    logToFile(options.logFile, `Request: ${method} ${reqUrl} - File uploaded: ${filePath} - Date: ${moment().format("DD.MM.YYYY, HH:mm")}`);
                     res.statusCode = 201;
                     res.end('File created or updated');
                 }
@@ -64,6 +65,8 @@ const server = http.createServer((req, res) => {
 
         const newFilePath = path.join(options.directory, newFileName);
 
+        logToFile(options.logFile, `Request: ${method} ${reqUrl} - Old file: ${filePath} - New file: ${newFilePath} - Date: ${moment().format("DD.MM.YYYY, HH:mm")}`);
+
         fs.rename(filePath, newFilePath, (err) => {
             if (err) {
                 res.statusCode = 500;
@@ -78,7 +81,6 @@ const server = http.createServer((req, res) => {
         res.end('Method Not Allowed');
     }
 });
-
 
 
 server.listen(options.port, options.address, () => {
